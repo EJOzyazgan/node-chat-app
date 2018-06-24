@@ -24,13 +24,10 @@ io.on('connection', (socket) => {
         console.log("createdEmail", newEmail);
     });
 
-    socket.on('createMessage', (message) => {
+    socket.on('createMessage', (message, callback) => {
         console.log("createdMessage", message);
-        io.emit('newMessage', {
-            from: message.from,
-            text: message.text,
-            createdAt: new Date().getTime()
-        });
+        io.emit('newMessage', generateMessage(message.from, message.text));
+        callback("This si from server");
         // socket.broadcast.emit('newMessage', {
         //     from: message.from,
         //     text: message.text,
